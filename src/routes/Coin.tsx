@@ -1,6 +1,16 @@
 import { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router";
-import { Container, Header, Loader, Title } from "../style/Style";
+import { Route, Switch, useLocation, useParams } from "react-router";
+import Chart from "../Chart";
+import Price from "../Price";
+import {
+  Container,
+  Header,
+  Loader,
+  Title,
+  Overview,
+  OverviewItem,
+  Description,
+} from "../style/Style";
 
 interface CoinParams {
   coinId: string;
@@ -78,10 +88,11 @@ export default function Coin() {
         await fetch(`https://api.coinpaprika.com/v1/coins/${coinId}`)
       ).json();
       const priceData = await (
-        await fetch(`https://api.coinpaprika.com/v1/coins/${coinId}`)
+        await fetch(`https://api.coinpaprika.com/v1/tickers/${coinId}`)
       ).json();
       setInfo(infoData);
       setPriceInfo(priceData);
+      setLoading(false);
     })();
   }, []);
 
@@ -90,7 +101,45 @@ export default function Coin() {
       <Header>
         <Title>{state?.name || "Loading..."}</Title>
       </Header>
-      {loading ? <Loader>Loading...</Loader> : null}
+      {loading ? (
+        <Loader>Loading...</Loader>
+      ) : (
+        <>
+          <Overview>
+            <OverviewItem>
+              <span>Rank:</span>
+              <span>{info?.rank}</span>
+            </OverviewItem>
+            <OverviewItem>
+              <span>Symbol:</span>
+              <span>${info?.symbol}</span>
+            </OverviewItem>
+            <OverviewItem>
+              <span>Open Source:</span>
+              <span>{info?.open_source ? "Yes" : "No"}</span>
+            </OverviewItem>
+          </Overview>
+          <Description>{info?.description}</Description>
+          <Overview>
+            <OverviewItem>
+              <span>Total Suply:</span>
+              <span>{priceInfo?.total_supply}</span>
+            </OverviewItem>
+            <OverviewItem>
+              <span>Max Supply:</span>
+              <span>{priceInfo?.max_supply}</span>
+            </OverviewItem>
+          </Overview>
+          <Switch>
+            <Route path={`/${coinId}/price`}>
+              <Price />
+            </Route>
+            <Route path={`/${coinId}/chart`}>
+              <Chart />
+            </Route>
+          </Switch>
+        </>
+      )}
     </Container>
   );
 }
