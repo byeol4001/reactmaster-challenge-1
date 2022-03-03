@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
+import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
+import { fetchCoins } from "../api";
 import {
   Container,
   Header,
@@ -21,7 +23,10 @@ interface ICoin {
 }
 
 export default function Coins() {
-  const [coins, setCoins] = useState<ICoin[]>([]);
+  const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
+  // { 로딩상태 , 반환된 데이터 } = useQuery(key, 데이터를 불러오는 비동기함수)
+
+  /* const [coins, setCoins] = useState<ICoin[]>([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     (async () => {
@@ -30,17 +35,17 @@ export default function Coins() {
       setLoading(false);
       setCoins(json.slice(0, 100));
     })();
-  }, []);
+  }, []); */
   return (
     <Container>
       <Header>
         <Title>코인</Title>
       </Header>
-      {loading ? (
+      {isLoading ? (
         <Loader>LOADING...😅</Loader>
       ) : (
         <CoinsList>
-          {coins.map((coin) => (
+          {data?.slice(0, 100).map((coin) => (
             <Coin key={coin.id}>
               <Link
                 to={{ pathname: `/${coin.id}`, state: { name: coin.name } }}
