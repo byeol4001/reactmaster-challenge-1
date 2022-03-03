@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
-import { Route, Switch, useLocation, useParams } from "react-router";
+import {
+  Route,
+  Switch,
+  useLocation,
+  useParams,
+  useRouteMatch,
+} from "react-router";
+import { Link } from "react-router-dom";
 import Chart from "../Chart";
 import Price from "../Price";
 import {
@@ -10,6 +17,8 @@ import {
   Overview,
   OverviewItem,
   Description,
+  Tabs,
+  Tab,
 } from "../style/Style";
 
 interface CoinParams {
@@ -81,6 +90,8 @@ export default function Coin() {
   const [priceInfo, setPriceInfo] = useState<PriceData>();
   const { coinId } = useParams<CoinParams>();
   const { state } = useLocation<RouteState>();
+  const priceMatch = useRouteMatch("/:coinId/price");
+  const chartMatch = useRouteMatch("/:coinId/chart");
 
   useEffect(() => {
     (async () => {
@@ -99,7 +110,10 @@ export default function Coin() {
   return (
     <Container>
       <Header>
-        <Title>{state?.name || "Loading..."}</Title>
+        <Title>
+          {" "}
+          {state?.name ? state.name : loading ? "Loading..." : info?.name}
+        </Title>
       </Header>
       {loading ? (
         <Loader>Loading...</Loader>
@@ -130,11 +144,21 @@ export default function Coin() {
               <span>{priceInfo?.max_supply}</span>
             </OverviewItem>
           </Overview>
+
+          <Tabs>
+            <Tab isActive={chartMatch !== null}>
+              <Link to={`/${coinId}/chart`}>Chart</Link>
+            </Tab>
+            <Tab isActive={priceMatch !== null}>
+              <Link to={`/${coinId}/price`}>Price</Link>
+            </Tab>
+          </Tabs>
+
           <Switch>
-            <Route path={`/${coinId}/price`}>
+            <Route path={`/:coinId/price`}>
               <Price />
             </Route>
-            <Route path={`/${coinId}/chart`}>
+            <Route path={`/:coinId/chart`}>
               <Chart />
             </Route>
           </Switch>
