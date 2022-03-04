@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import { useQuery } from "react-query";
 import {
   Route,
@@ -94,7 +95,10 @@ export default function Coin() {
   );
   const { isLoading: chartLoading, data: tickerData } = useQuery<TickerData>(
     ["chart", coinId],
-    () => fetchCoinTicker(coinId)
+    () => fetchCoinTicker(coinId),
+    {
+      refetchInterval: 7000,
+    }
   );
   const { state } = useLocation<RouteState>();
   const priceMatch = useRouteMatch("/:coinId/price");
@@ -104,9 +108,13 @@ export default function Coin() {
 
   return (
     <Container>
+      <Helmet>
+        <title>
+          {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
+        </title>
+      </Helmet>
       <Header>
         <Title>
-          {" "}
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
         </Title>
       </Header>
@@ -124,8 +132,8 @@ export default function Coin() {
               <span>${infoData?.symbol}</span>
             </OverviewItem>
             <OverviewItem>
-              <span>Open Source:</span>
-              <span>{infoData?.open_source ? "Yes" : "No"}</span>
+              <span>Price :</span>
+              <span>{tickerData?.quotes.USD.price.toFixed(10)}</span>
             </OverviewItem>
           </Overview>
           <Description>{infoData?.description}</Description>
