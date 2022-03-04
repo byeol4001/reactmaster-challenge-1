@@ -11,16 +11,7 @@ import {
   Loader,
   Img,
 } from "../style/Style";
-
-interface ICoin {
-  id: string;
-  name: string;
-  symbol: string;
-  rank: number;
-  is_new: boolean;
-  is_active: boolean;
-  type: string;
-}
+import { ICoin } from "../type";
 
 export default function Coins() {
   const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);

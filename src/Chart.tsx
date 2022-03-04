@@ -1,23 +1,9 @@
 import ReactApexChart from "react-apexcharts";
 import { useQuery } from "react-query";
 import { fetchCoinHistory } from "./api";
+import { IcoinId, IHistorical } from "./type";
 
-interface ChartProps {
-  coinId: string;
-}
-
-interface IHistorical {
-  time_open: string;
-  time_close: string;
-  open: number;
-  high: number;
-  low: number;
-  close: number;
-  volume: number;
-  market_cap: number;
-}
-
-export default function Chart({ coinId }: ChartProps) {
+export default function Chart({ coinId }: IcoinId) {
   const { isLoading, data } = useQuery<IHistorical[]>("ohlcv", () =>
     fetchCoinHistory(coinId)
   );

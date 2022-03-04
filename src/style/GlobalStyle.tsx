@@ -1,10 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 
-interface IGlobalStyle {
-  bgColor?: string;
-  textColor?: string;
-  accentColor?: string;
-}
+import { IGlobalStyle } from "../type";
 
 export const GlobalStyle = createGlobalStyle<IGlobalStyle>`
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
