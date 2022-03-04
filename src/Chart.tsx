@@ -45,10 +45,13 @@ export default function Chart({ coinId }: IcoinId) {
               curve: "smooth",
               width: 3,
             },
-
+            yaxis: {
+              show: false,
+            },
             xaxis: {
               axisBorder: { show: false },
               labels: { show: false },
+              axisTicks: { show: false },
               type: "datetime",
               categories: data?.map((price) => price.time_close),
             },

@@ -8,6 +8,7 @@ export const Container = styled.div`
 
 export const Header = styled.header`
   height: 15vh;
+  margin-top: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -20,8 +21,8 @@ export const Coin = styled.li`
   align-items: center;
   padding: 20px;
   margin-bottom: 10px;
-  background-color: white;
   color: ${(props) => props.theme.bgColor};
+  background: ${(props) => props.theme.textColor};
   border-radius: 15px;
   a {
     display: flex;
@@ -67,7 +68,7 @@ export const Img = styled.img`
 export const Overview = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${(props) => props.theme.textColor};
   padding: 10px 20px;
   border-radius: 10px;
 `;
@@ -80,6 +81,10 @@ export const OverviewItem = styled.div`
     font-weight: 400;
     text-transform: uppercase;
     margin-bottom: 5px;
+    color: ${(props) => props.theme.bgColor};
+  }
+  & span {
+    color: ${(props) => props.theme.bgColor};
   }
 `;
 export const Description = styled.p`
@@ -98,13 +103,14 @@ export const Tab = styled.span<{ isActive: boolean }>`
   text-transform: uppercase;
   font-size: 12px;
   font-weight: 400;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${(props) => props.theme.textColor};
   padding: 7px 0px;
   border-radius: 10px;
   color: ${(props) =>
     props.isActive ? props.theme.accentColor : props.theme.textColor};
   a {
     display: block;
+    color: ${(props) => props.theme.bgColor};
   }
 `;
 
@@ -112,7 +118,7 @@ export const PriceWrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid ${(props) => props.theme.textColor};
   padding: 0 20px 15px 20px;
   margin-bottom: 15px;
   & > div > span {
@@ -121,7 +127,16 @@ export const PriceWrap = styled.div`
     font-size: 13px;
     font-weight: 900;
     color: ${(props) => props.theme.bgColor};
-    background: #fff;
+    background: ${(props) => props.theme.textColor};
     margin-left: 5px;
   }
+`;
+
+export const ChangeDark = styled.div`
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 35px;
+  cursor: pointer;
 `;
