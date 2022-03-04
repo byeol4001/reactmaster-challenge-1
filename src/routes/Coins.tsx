@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
@@ -26,17 +25,6 @@ interface ICoin {
 export default function Coins() {
   const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
   // { 로딩상태 , 반환된 데이터 } = useQuery(key, 데이터를 불러오는 비동기함수)
-
-  /* const [coins, setCoins] = useState<ICoin[]>([]);
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    (async () => {
-      const response = await fetch("https://api.coinpaprika.com/v1/coins");
-      const json = await response.json();
-      setLoading(false);
-      setCoins(json.slice(0, 100));
-    })();
-  }, []); */
   return (
     <Container>
       <Helmet>
