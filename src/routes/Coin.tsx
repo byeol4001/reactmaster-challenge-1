@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import { useHydrate, useQuery } from "react-query";
+import { useQuery } from "react-query";
 import {
   Route,
   Switch,
@@ -104,7 +103,7 @@ export default function Coin() {
 
           <Switch>
             <Route path={`/:coinId/price`}>
-              <Price />
+              <Price coinId={coinId} />
             </Route>
             <Route path={`/:coinId/chart`}>
               <Chart coinId={coinId} />

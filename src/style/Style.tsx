@@ -107,3 +107,21 @@ export const Tab = styled.span<{ isActive: boolean }>`
     display: block;
   }
 `;
+
+export const PriceWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #fff;
+  padding: 0 20px 15px 20px;
+  margin-bottom: 15px;
+  & > div > span {
+    padding: 5px 15px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 900;
+    color: ${(props) => props.theme.bgColor};
+    background: #fff;
+    margin-left: 5px;
+  }
+`;
