@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import { useQuery } from "react-query";
+import { useHydrate, useQuery } from "react-query";
 import {
   Route,
   Switch,
+  useHistory,
   useLocation,
   useParams,
   useRouteMatch,
@@ -103,6 +104,11 @@ export default function Coin() {
   const { state } = useLocation<RouteState>();
   const priceMatch = useRouteMatch("/:coinId/price");
   const chartMatch = useRouteMatch("/:coinId/chart");
+  const history = useHistory();
+
+  const movePrevPage = () => {
+    history.goBack();
+  };
 
   const loading = infoLoding || chartLoading;
 
@@ -115,6 +121,7 @@ export default function Coin() {
       </Helmet>
       <Header>
         <Title>
+          <div onClick={movePrevPage}>&#9666;</div>
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
         </Title>
       </Header>

@@ -37,6 +37,16 @@ export const Coin = styled.li`
 `;
 
 export const Title = styled.h1`
+  div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+  }
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
   font-size: 48px;
   color: ${(props) => props.theme.accentColor};
 `;
